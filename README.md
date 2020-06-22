@@ -1,8 +1,5 @@
 # aln_plot
 
-![Example Plot](example.png)
-
-
 ## regular aln_plot 
 See the template in `cmds.sh` which takes three arguments `{target_seq}` `{query_seq}` and `{output_paf}`. 
 Then take the output table named `{output_paf}.tbl` and edit the R script `aln_plot.R` to use it as input.
@@ -17,3 +14,5 @@ This takes the same arguments as above however the query sequnce is split by the
 make snakemake
 alter R script to take inputs and outputs
 
+
+![Example Plot](example.png)
