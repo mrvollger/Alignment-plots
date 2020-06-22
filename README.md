@@ -15,4 +15,4 @@ make snakemake
 alter R script to take inputs and outputs
 
 
-![Example Plot](example.png)
+![Example Plot](imgs/example.png)
