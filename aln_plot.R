@@ -39,4 +39,4 @@ p2 = ggplot(data=df, aes(x=x1, xend=x2, y=y1, yend=y2, fill=cutid, color=cutid))
 # combine them 
 p3 = p1/p2 + plot_layout(heights = c(1, 3)); p3
 
-ggsave("~/Desktop/cen.png", plot=p3, height = 12, width = 8, dpi = 400)
+ggsave("example.png", plot=p3, height = 12, width = 8, dpi = 400)
