@@ -44,8 +44,9 @@ def read_paf(f):
     for name in remove: del rtn[name] 
     return(rtn)
 
-def read_dict(paf_d, NCOLORS, minq, dup):
+def read_dict(paf_d, args): #NCOLORS, minq, dup):
 	df = pd.DataFrame(paf_d)
+	sys.stderr.write(f"\nN aligmnets: {df.shape}\n")
 	# if the contig name is not unqiue, check for a split fasta, and then if exit if multiple queries 
 	if(len(df.q_name.unique())!=1):
 		split = df.q_name.str.extract('(.+):(\d+)-(\d+)', expand=True)
@@ -67,23 +68,24 @@ def read_dict(paf_d, NCOLORS, minq, dup):
 	 
 	# set min identity 
 	df["identity"] = 100 - 100*df["de"]
-	MINID = int(df.identity.quantile(minq))
+	MINID = max( int(df.identity.quantile(args.l)), args.i)
+	sys.stderr.write(f"Min % identity: {MINID}\n")
 	df = df.loc[df.identity >= MINID]
 
 	# de dup the huristic
-	if(not dup):
-		sys.stderr.write(f"\n{df.shape}\n")
+	if(not args.dup):
 		df["score"] = df.aln_len * df.identity
 		df.sort_values(by="score", inplace=True)
 		dup = df.duplicated(subset=["x1", "y1"], keep="last") | df.duplicated(subset=["x2", "y2"], keep="last")
 		df=df[~dup]
-		sys.stderr.write(f"\n{df.shape}\n")
 
 	# set colors
+	NCOLORS = args.n
 	df["cut"] = pd.qcut( df["identity"], NCOLORS, duplicates="drop")
 	df["cutid"] = pd.qcut( df["identity"], NCOLORS, duplicates="drop", labels=False)
 	NCOLORS = len(df.cutid.unique())
-
+	
+	sys.stderr.write(f"N alignments after filters: {df.shape}\n")
 	df = df[header + ["x1","x2","y1", "y2", "identity", "cutid"]]
 	return(df)
 
@@ -95,11 +97,12 @@ if __name__ == "__main__":
 	parser.add_argument('--dup', help="Disable the dedup huristic for tandem repeats",  action="store_true", default=False)
 	parser.add_argument("-n", help="number of colors ", type=int, default=10)
 	parser.add_argument("-l", help="Remove the lowest quntile of alignemtns", type=float, default=0.0)
+	parser.add_argument("-i", help="Remove aligments with percent identity less than. (e.g -i 85 to remove things below 85%)", type=float, default=0.0)
 	parser.add_argument('-d', help="store args.d as true if -d",  action="store_true", default=False)
 	args = parser.parse_args()
 	
 	paf_d = read_paf(args.infile)
-	df = read_dict(paf_d, NCOLORS=10, minq=args.l, dup=args.dup)
+	df = read_dict(paf_d, args) #NCOLORS=10, minq=args.l, dup=args.dup)
 	df.to_csv(args.outfile, index=False, sep="\t")
 
 
