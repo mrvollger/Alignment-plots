@@ -16,7 +16,7 @@ if(rstudioapi::isAvailable()){
 H = 12
 W = 8
 
-df= fread("nobackups/glv9.paf.tbl"); df$cutid = as.factor(df$cutid)
+df= fread("nobackups/gl8v8.tbl.tbl"); df$cutid = as.factor(df$cutid)
 
 
 # make the identity histogram
@@ -26,7 +26,7 @@ p1 = ggplot(data=df, aes(identity, fill=cutid, weight=aln_len))+
   ylab("bp") +
   scale_fill_brewer(palette = "Spectral", direction=-1) +
   scale_color_brewer(palette = "Spectral", direction=-1) +
-  theme_classic()  + theme(legend.position = "none") +
+  theme_cowplot()  + theme(legend.position = "none") +
   scale_y_continuous(label=comma)
 
 
@@ -43,13 +43,13 @@ p2 = ggplot(data=small, aes(x=x1, xend=x2, y=y1, yend=y2, fill=cutid, color=cuti
   geom_segment() +   coord_fixed(ratio = 1) +
   scale_fill_brewer(palette = "Spectral", direction=-1) +
   scale_color_brewer(palette = "Spectral", direction=-1) +
-  theme_classic()  + theme(legend.position = "none") +
+  theme_cowplot()  + theme(legend.position = "none") +
   ylab(unique(df$q_name)) + xlab(unique(df$t_name)) +
   scale_y_continuous(label=comma) +
   scale_x_continuous(label=comma)
 
 # combine them 
-p3 = p1/p2 + plot_layout(heights = c(1, 3));
+p3 = p1/p2 + plot_layout(heights = c(1, 3)); p3
 
 
 density= 50
