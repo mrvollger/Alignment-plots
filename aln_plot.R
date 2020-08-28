@@ -16,7 +16,7 @@ if(rstudioapi::isAvailable()){
 H = 12
 W = 8
 
-df= fread("nobackups/gl8v8.tbl.tbl"); df$cutid = as.factor(df$cutid)
+df= fread("nobackups/13vs733.paf.tbl"); df$cutid = as.factor(df$cutid)
 
 
 # make the identity histogram

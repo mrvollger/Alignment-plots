@@ -4,10 +4,10 @@ import os
 import sys
 import pandas as pd
 import re
-import altair as alt
-from vega_datasets import data
+#import altair as alt
+#from vega_datasets import data
 import json
-alt.themes.enable("default")
+#alt.themes.enable("default")
 header = ["q_name", "q_len", "q_st", "q_en", "strand",
                "t_name", "t_len", "t_st", "t_en", "matches", "aln_len", "mapq"]
 ctype = [str, int, int, int, str, str, int, int, int, int, int, int]
