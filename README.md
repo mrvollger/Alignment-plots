@@ -16,3 +16,10 @@ alter R script to take inputs and outputs
 
 
 ![Example Plot](imgs/example.png)
+
+
+## 20200827 For Glennis. 
+See the `20200827.sh` script to generate the tables. Then go to `aln_plot.R` and modify the input to and output.
+
+
+
