@@ -98,8 +98,8 @@ def read_dict(paf_d, args): #NCOLORS, minq, dup):
 	# check for a split fasta, and then if exit if multiple queries 
 	if(args.frac):
 		split = df.q_name.str.extract('(.+):(\d+)-(\d+)', expand=True)
-		assert len(split[0].unique()) == 1, "There can be only one query contig if using --frac"
-		assert len(df.t_name.unique()) == 1, "There can be only one traget contig if using --frac"
+		#assert len(split[0].unique()) == 1, "There can be only one query contig if using --frac"
+		#assert len(df.t_name.unique()) == 1, "There can be only one traget contig if using --frac"
 		offset = split[1].astype(int)
 		df.q_st = df.q_st + offset
 		df.q_en = df.q_en + offset
